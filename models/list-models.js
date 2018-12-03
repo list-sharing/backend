@@ -1,21 +1,22 @@
 const knex = require('../db/knex');
 const uuid = require('uuid/v4')
 
-// function addList(userId, listId,newList){
-//    return knex('lists')
-//         .then(function(result){
-
-//         })
-
-// }
-
-function getAllLists(){
+function getAllLists(userId){
     return knex('lists')
+        .innerJoin('users_lists', 'users_lists.list_id', 'lists.id')
+        .where({
+            user_id: userId
+        })
+
 };
 
-function getList(){
+function getList(userId, listId){
     return knex('lists')
-    .where('id','listId')
+    .innerJoin('users_lists', 'users_lists.list_id', 'list.id')
+    .where({
+        // user_id: userId,
+        id: listId
+    })
 };
 
 module.exports = {getAllLists,getList}

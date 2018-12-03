@@ -1,11 +1,11 @@
 const express = require('express')
-const router = express.Router()
-const listsController = require('../controllers/list-controller')
+const router = express.Router({mergeParams:true})
+const listsCtrl = require('../controllers/list-controllers')
 
-router.get('/lists',listsController.getAllLists)
-router.get('/lists/:listId',listsController.getList)
-router.delete('/lists',listsController.deleteList)
-router.post('/lists/:listId',listsController.addList)
-router.put('/lists/:listId',listsController.updateList)
+router.get('/',listsCtrl.getAllLists)
+router.get('/:listId',listsCtrl.getList)
+// router.delete('/',listsCtrl.deleteList)
+// router.post('/:listId',listsCtrl.addList)
+// router.put('/:listId',listsCtrl.updateList)
 
 module.exports = router

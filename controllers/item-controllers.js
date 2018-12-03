@@ -39,4 +39,4 @@ function createItem(req, res, next){
     res.status(200).send(list)
   }
 
-  module.exports(createItem, modifyItem, getAllItems, getOneItem, removeItem)
+  module.exports = {createItem, modifyItem, getAllItems, getOneItem, removeItem}

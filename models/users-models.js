@@ -1,6 +1,11 @@
 const knex = require('../db/knex')
 const bcrypt = require('bcrypt')
 
+function getOneUser(id){
+    return knex('users')
+    .where({id})
+}
+
 function signup(email, password) {
     return knex('users')
         .where('email', email)

@@ -13,7 +13,6 @@ function login(email, password){
             return data
         })
     })
-    
 }
 
 module.exports = {login}

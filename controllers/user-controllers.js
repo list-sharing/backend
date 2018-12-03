@@ -1,4 +1,4 @@
-const userModel = require('../models/users')
+const userModel = require('../models/users-models')
 
 function signup(req, res, next){
     const {email, password} = req.body
@@ -12,12 +12,12 @@ function signup(req, res, next){
 }
 
 function getOneUser (req,res,next) {
-    return userModel.getOneUser(req.params.userId)
+    return userModel.getOneUser(req.params.id)
     .then((result) => {
-    if(!result) 
-        {return next({status: 404, message: user })}
+        if(!result) {
+            return next({status: 404, message: user })
+        }
     res.status(200).send(result)})
-    
 }
 
 function editOneUser (req,res,next) {
