@@ -20,19 +20,35 @@ function getList(req,res,next){
 };
 
 function addList(req,res,next){
-    const listId = req.params.id;
+    //const newList = req.body;
     //const {  } = req.body;
+    model.addList(newList).then(function(result){
+        if(!result)
+        return next({status: 404, message: "list already taken"})
+    })
 
-
+    res.status(201).send(result)
 };
 
-function deleteList(){
+function deleteList(req,res,next){
     const listId = req.params.id;
-    model.deleteList(listId)
+    model.deleteList(listId).then(function(result){
+        if(!result||result.length==0)
+        next({status: 404, message: "list already deleted"})
+
+        res.status(200).send(result)
+    })
 };
 
 function updateList(){
+    const listId = req.params.id;
+    //const reframedList = req.body;
+    model.updatedList(listId, reframedList).then(function(result){
+        if(!listId)
+        return next({status: 404, message: "list already deleted"})
 
+        res.status(201).send(result)
+    })
 };
 
 module.exports = {
