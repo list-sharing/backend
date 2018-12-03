@@ -1,5 +1,5 @@
 const express = require('express')
-const itemsController = require('../controllers/items')
+const itemsController = require('../controllers/item-controllers')
 const router = express.Router()
 
 router.get('/:userId/:listId/items', itemsController.getAllItems)

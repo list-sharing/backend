@@ -1,11 +1,11 @@
-const lists = require('../db/knex.js')
+const lists = require('../db/knex')
 const uuid = require('uuid')
 
 function createItem(userId, listId, newItem) {
 
     const user = lists.find(ele => ele.id === userId)
 
-    const list = lists.find(ele => ele.id === listId)
+    const list = user.find(ele => ele.id === listId)
 
     if (!list) {
         return {

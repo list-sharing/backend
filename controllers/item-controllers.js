@@ -1,4 +1,4 @@
-const itemsModel = require('../models/items.js')
+const itemsModel = require('../models/item-models.js')
 
 function createItem(req, res, next){
     const newList = itemsModel.createItem(req.params.userId, req.params.listId, req.body)

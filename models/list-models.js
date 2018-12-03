@@ -1,1 +1,1 @@
-const knex = require('../../db');
+const lists = require('../db/knex')
