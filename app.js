@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
     const status = 500 || err.status
-    req.status(status).send(err.message)
+    res.status(status).send(err.message)
 })
 
 const listener = () => console.log(`Getting lit on port ${port}`)
