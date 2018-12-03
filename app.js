@@ -9,7 +9,7 @@ app.use(cors())
 app.use(morgan('dev-'))
 app.use(bodyParser.json())
 
-// app.use('/users', require('./routes/users'))
+app.use('/users', require('./routes/users'))
 
 app.use((req, res, next) => {
     next({status:404, message: "Couldn't find it, bro"})
