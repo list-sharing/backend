@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 
 function signup(email, password) {
     return knex('users')
+<<<<<<< HEAD
         .where('email', email)
         .then(([data]) => {
             if (!!data) throw {
@@ -19,6 +20,19 @@ function signup(email, password) {
                 })
                 .returning(users.email)
         })
+=======
+    .where('email', email)
+    .then(([data])=>{
+        console.log(data)
+        if(!!data) throw {status:400, message: 'Email already in use'}
+        return bcrypt.hash(password, 10)
+    })
+    .then(hashedPW => {
+        console.log(hashedPW)
+        return knex('users')
+        .insert({email, password: hashedPW})
+    })
+>>>>>>> 82b2fd056f0782e7bab938b1d737757d5461180f
 }
 
 function getOneUser(userId) {
