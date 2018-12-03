@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const usersCtrl = require('../controllers/users')
 
+router.post('/signup', usersCtrl.signup)
+
 // router.get('/users/', usersCtrl.)
 // router.get('/users/:id' usersCtrl.)
 // router.delete('/users/:id', usersCtrl.)

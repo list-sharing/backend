@@ -1,6 +1,6 @@
 const userModel = require('../models/users')
 
-function signup(res, res, next){
+function signup(req, res, next){
     const {email, password} = req.body
     if(!email || !password) return next({status:400, message: 'Incomplete signup'})
     return userModel.signup(email, password)
