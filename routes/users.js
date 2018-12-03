@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const usersCtrl = require('./controllers/users')
+const usersCtrl = require('../controllers/users')
 
 // router.get('/users/', usersCtrl.)
 // router.get('/users/:id' usersCtrl.)
