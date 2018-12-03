@@ -12,3 +12,4 @@ function signup(res, res, next){
 }
 
 module.exports = {signup}
+
