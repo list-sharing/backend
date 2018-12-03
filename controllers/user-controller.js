@@ -1,6 +1,6 @@
 const userModel = require('../models/users')
 
-function signup(res, res, next){
+function signup(req, res, next){
     const {email, password} = req.body
     if(!email || !password) return next({status:400, message: 'Incomplete signup'})
     return userModel.signup(email, password)
@@ -12,15 +12,20 @@ function signup(res, res, next){
 }
 
 function getOneUser (req,res,next) {
-    const user = userModel.getOneUser(req.params.userId)
-    if(!user) return next({status: 404, message: user })
-    res.status(200).send(user)
+    return userModel.getOneUser(req.params.userId)
+    .then((result) => {
+    if(!result) 
+        {return next({status: 404, message: user })}
+    res.status(200).send(result)})
+    
 }
 
 function editOneUser (req,res,next) {
-    const newUser = userModel.modifyUser(req.params.userId, req.body)
+    if (!usermodel) return
+    const newUser = userModel.editOneUser(req.params.userId, req.body)
     if(newUser.error) return next( { status: 400, message: newUser })
-    res.status(201).send({ data: newUser })
+    const {username, password, profileInformation} = req.body;
+    res.status(201).send({username, password, profileInformation})
   }
 
 module.exports = {signup, getOneUser, editOneUser}

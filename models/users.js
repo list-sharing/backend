@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 
 function signup(email, password) {
     return knex('users')
-<<<<<<< HEAD
         .where('email', email)
         .then(([data]) => {
             if (!!data) throw {
@@ -20,60 +19,22 @@ function signup(email, password) {
                 })
                 .returning(users.email)
         })
-=======
-    .where('email', email)
-    .then(([data])=>{
-        console.log(data)
-        if(!!data) throw {status:400, message: 'Email already in use'}
-        return bcrypt.hash(password, 10)
-    })
-    .then(hashedPW => {
-        console.log(hashedPW)
-        return knex('users')
-        .insert({email, password: hashedPW})
-    })
->>>>>>> 82b2fd056f0782e7bab938b1d737757d5461180f
 }
 
-function getOneUser(userId) {
-    const user = knex.find(ele => ele.id === userId)
-
-    if (!user) {
-        return {
-            error: ['user not found']
-        }
-    }
-    return user
+function editOneUser(userId, ) {
+    return knex('users')
+        .where({
+            id: userId
+        })
+        .then(response => {
+            return knex('users')
+                .update({
+                    username: response.username,
+                    password: response.password,
+                    profileInformation: response.profileInformation
+                })
+        })
 }
-
-function editOneUser(userId, newUser) {
-    const error = []
-    const userIndex = knex.findIndex(ele => ele.id === userId)
-    if (userIndex === -1) {
-        error.push('Not Found')
-    }
-
-    const {
-        id,
-        username,
-        password,
-        profileInformation,
-    } = newUser
-
-    knex[userIndex].username = username
-    knex[userIndex].password = password
-    knex[userIndex].profileInformation = profileInformation
-
-    if (!username && !profileInformation) {
-        error.push("Please fill in all values")
-    }
-    if (error.length) return {
-        error
-    }
-
-    return knex[userIndex]
-}
-
 module.exports = {
     signup,
     getOneUser,
