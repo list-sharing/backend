@@ -21,11 +21,14 @@ function getList(req,res,next){
 
 function addList(req,res,next){
     const listId = req.params.id;
-    const {  } = req.body;
+    //const {  } = req.body;
+
+
 };
 
 function deleteList(){
-
+    const listId = req.params.id;
+    model.deleteList(listId)
 };
 
 function updateList(){
