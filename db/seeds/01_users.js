@@ -6,6 +6,6 @@ exports.seed = function(knex, Promise) {
     {id: 3, email: 'freynolds@frankslittlebeauties.com', password:'$2b$10$4lVLQnOK6CCuH4vmFRgAmuxeB2d8fyCWGYU5SAvPfMJtKA.6Y/T4i'}
   ])
   .then(() => {
-    return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM snacks));")
+    return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));")
   })
 };
