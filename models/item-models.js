@@ -60,7 +60,7 @@ function removeItem(itemId) {
     return knex('items')
     .select('*')
     .where({
-        'id': 3
+        'id': itemId
     })
     .del()
         .then(result => {
