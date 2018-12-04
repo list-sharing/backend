@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 
 function login (req, res, next){
     const {email, password} = req.body
+    
     if(!email || !password) return next({status: 400, message:'Error with email or password'})
     return authModel.login(email, password)
     .then(result => {
