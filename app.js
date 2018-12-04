@@ -11,7 +11,7 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
-app.use('/users', require('./routes/users-routes'))
+app.use('/users', require('./routes/user-routes'))
 app.use('/auth', require('./routes/auth-routes'))
 
 app.use((req, res, next) => {

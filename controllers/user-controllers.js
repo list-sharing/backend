@@ -1,4 +1,4 @@
-const userModel = require('../models/users-models')
+const userModel = require('../models/user-models')
 
 function signup(req, res, next){
     const {email, password} = req.body
