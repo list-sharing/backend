@@ -21,6 +21,15 @@ function getList(req,res,next){
     .catch(next)
 };
 
+function addList(req,res,next){
+    model.addList(req.params.userId,req.params.listId).then(function(result){
+        if(!result||result.length==0)
+        next({status: 400, message: "list not found"})
+
+        
+        res.status(200).send(result);
+    }).catch(next)
+}
 
 // function deleteList(req,res,next){
 //     const listId = req.params.id;

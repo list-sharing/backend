@@ -19,4 +19,11 @@ function getList(userId, listId){
     })
 };
 
+function addList(userId, listId){
+    return knex('list')
+    .innerJoin('user_lists','users_lists_id','list.id')
+    .where({
+        
+    })
+}
 module.exports = {getAllLists,getList}
