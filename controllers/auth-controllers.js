@@ -16,5 +16,24 @@ function login (req, res, next){
     .catch(next)
 }
 
+function authenticate(req, res, next){
+    const [, token] = req.headers.authorization.split(' ')
+    if(!token) return next({status:401, message: 'Unauthorized'})
+    jwt.verify(token, process.env.SECRET, (err, payload) => {
+        if(err) return next({status: 401, message: 'Unauthorized'})
+        req.claim = payload
+        next()
+    })
+}
 
-module.exports = {login}
+function authStatus(req, res, next){
+    res.status(200).send({id:req.claim.sub.id})
+}
+
+function checkRequest(req, res, next) {
+    const id = req.params.id
+    if (id !== req.claims.sub.id) return next({ status: 401, message: 'Unauthorized' })
+    next()
+}   
+
+module.exports = {login, authenticate, authStatus, checkRequest}

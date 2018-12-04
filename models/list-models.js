@@ -12,10 +12,10 @@ function getAllLists(userId){
 
 function getList(userId, listId){
     return knex('lists')
-    .innerJoin('users_lists', 'users_lists.list_id', 'list.id')
+    .innerJoin('users_lists', 'users_lists.list_id', '=', 'lists.id')
     .where({
-        // user_id: userId,
-        id: listId
+        user_id: userId,
+        list_id: listId
     })
 };
 
