@@ -1,71 +1,70 @@
 const knex = require('../db/knex')
-const uuid = require('uuid')
 
-function createItem(userId, listId, newItem) {
+function createItem(listId, newItem) {
     return knex('items')
-        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+        .select('*')
+        .innerJoin('lists', 'items.list_id', 'lists.id')
         .where({
-            user_id: userId,
-            id: listId
+            'lists.id': listId
         })
         .insert({
             newItem
         })
-        .then(() => {
-            return knex('items')
+        .then(result=> {
+            return result
         })
 }
 
-function modifyItem(userId, listId, itemId, newItem) {
+function modifyItem(listId, itemId, newItem) {
     return knex('items')
-        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
+        .select('items.id as items_id', 'lists.id as lists_id', 'items.source_url', 'items.synopsis')
+        .innerJoin('lists', 'items.list_id', 'lists.id')
         .where({
-            user_id: userId,
-            list_id: listId,
-            id: itemId
+            'lists.id': listId,
+            'items.id': itemId
         })
         .update({
             newItem
         })
-        .then(() => {
-            return knex('items')
+        .then(result => {
+            return result
         })
 }
 
-function getAllItems(userId, listId) {
-
+function getAllItems(listId) {
     return knex('items')
-        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
+        .select('items.id as items_id', 'lists.id as lists_id', 'items.source_url', 'items.synopsis')
+        .innerJoin('lists', 'items.list_id', 'lists.id')
         .where({
-            user_id: userId,
-            list_id: listId
+            'lists.id': listId
         })
         .then(result => {
-            console.log(result)
+            return result
         })
 }
 
-function getOneItem(userId, listId, itemId) {
+function getOneItem(listId, itemId) {
     return knex('items')
-        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
+        .select('items.id as items_id', 'lists.id as lists_id', 'items.source_url', 'items.synopsis')
+        .innerJoin('lists', 'items.list_id', 'lists.id')
         .where({
-            user_id: userId,
-            list_id: listId,
-            id: itemId
+            'lists.id': listId,
+            'items.id': itemId
+        })
+        .then(result => {
+            return result
         })
 };
 
-function removeItem(userId, listId, itemId) {
+function removeItem(itemId) {
     return knex('items')
-        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
-        .where({
-            user_id: userId,
-            list_id: listId,
-            id: itemId
-        })
-        .del()
-        .then(() => {
-            return knex('items')
+    .select('*')
+    .where({
+        'id': 3
+    })
+    .del()
+        .then(result => {
+            return result
         })
 }
 

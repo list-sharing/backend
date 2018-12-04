@@ -1,14 +1,13 @@
 const itemsModel = require('../models/item-models.js')
-const uuid = require('uuid')
 
 function createItem(req, res, next) {
   const {
-    itemId,
+    id,
     sourceURL,
     itemSynopsis
   } = req.body
 
-  return itemsModel.createItem(req.params.userId, req.params.listId, req.body)
+  return itemsModel.createItem(req.params.listId, req.body)
     .then((result) => {
       if (!result) {
         return next({
@@ -17,7 +16,7 @@ function createItem(req, res, next) {
         })
       }
       res.status(201).send({
-        id: uuid(),
+        id,
         sourceURL,
         itemSynopsis
       })
@@ -29,7 +28,7 @@ function modifyItem(req, res, next) {
   const {
     itemSynopsis
   } = req.body;
-  return itemsModel.modifyItem(req.params.userId, req.params.listId, req.params.itemId, req.body)
+  return itemsModel.modifyItem(req.params.listId, req.params.itemId, req.body)
     .then((result) => {
       if (!result) {
         return next({
@@ -45,7 +44,7 @@ function modifyItem(req, res, next) {
 }
 
 function getAllItems(req, res, next) {
-  return itemsModel.getAllItems(req.params.userId, req.params.listId)
+  return itemsModel.getAllItems(req.params.listId)
     .then((result) => {
       if (!result) {
         return next({
@@ -60,7 +59,7 @@ function getAllItems(req, res, next) {
 
 
 function getOneItem(req, res, next) {
-  return itemsModel.getOneItem(req.params.userId, req.params.listId, req.params.itemId)
+  return itemsModel.getOneItem(req.params.listId, req.params.itemId)
     .then((result) => {
       if (!result) {
         return next({
@@ -74,7 +73,7 @@ function getOneItem(req, res, next) {
 }
 
 function removeItem(req, res, next) {
-  return itemsModel.removeItem(req.params.userId, req.params.listId, req.params.itemId)
+  return itemsModel.removeItem(req.params.listId, req.params.itemId)
     .then((result) => {
       if (!result) {
         return next({

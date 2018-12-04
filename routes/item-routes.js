@@ -1,6 +1,7 @@
 const express = require('express')
+
 const itemsController = require('../controllers/item-controllers')
-const router = express.Router()
+const router = express.Router({mergeParams: true})
 
 router.get('/', itemsController.getAllItems)
 router.get('/:itemId', itemsController.getOneItem)
