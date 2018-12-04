@@ -6,7 +6,7 @@ function getOneUser(id){
     .where({id})
 }
 
-function signup(email, password) {
+function signup(email, password, first_name, last_name) {
     return knex('users')
         .where('email', email)
         .then(([data]) => {
@@ -14,15 +14,17 @@ function signup(email, password) {
                 status: 400,
                 message: 'Email already in use'
             }
-            bcrypt.hash(password, 10)
+            return bcrypt.hash(password, 10)
         })
         .then(hashedPW => {
             return knex('users')
                 .insert({
                     email,
-                    password: hashedPW
+                    password: hashedPW,
+                    first_name,
+                    last_name
                 })
-                .returning(users.email)
+                .returning('users.email')
         })
 }
 
