@@ -13,6 +13,7 @@ app.use(bodyParser.json())
 
 app.use('/users', require('./routes/user-routes'))
 app.use('/auth', require('./routes/auth-routes'))
+app.get('/lists', require('./controllers/list-controllers').getAllLists)
 
 app.use((req, res, next) => {
     next({status:404, message: "Couldn't find it, bro"})

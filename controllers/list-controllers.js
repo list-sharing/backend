@@ -1,7 +1,20 @@
 const model = require('../models/list-models');
 
 function getAllLists(req,res,next){
-  model.getAllLists(req.params.userId)
+    model.getAllLists()
+    .then(function(result){
+        if(result.length<1)
+        return next({status: 404, message: "list not found"})
+
+        res.status(200).send(result)
+    })
+    .catch(next)
+}
+
+function getAllUserLists(req,res,next){
+    console.log(req.params);
+    
+  model.getAllUserLists(req.params.userId)
   .then(function(result){
       if(result.length < 1)
       return next({status: 404, message: "list not found"})
@@ -13,24 +26,44 @@ function getAllLists(req,res,next){
 function getList(req,res,next){
     model.getList(req.params.userId, req.params.listId).then(function(result){
         if(!result||result.length==0)
-        next({status: 404, message: "list not found"})
+        return next({status: 404, message: "list not found"})
 
         res.status(200).send(result);
     })
     .catch(next)
 };
 
+function addList(req,res,next){
+    console.log(req.body)
+    if(!req.body.list_name) throw {status: 500, message: "missing name"}
+    let list
+    model.addList(req.body).then(function([result]){
+        if(!result)
+        return next({status: 500, message: "list not made"})
 
-// function deleteList(req,res,next){
-//     const listId = req.params.id;
-//     model.deleteList(listId).then(function(result){
-//         if(!result||result.length==0)
-//         next({status: 404, message: "list already deleted"})
+        list = result
+        return model.addUserToList(req.params.userId,result.id)
+        
+    })
+    .then(function(result){
+        res.status(201).send(list)
+    })
+    .catch(next)
+}
 
-//         res.status(200).send(result)
-//     })
-// };
 
+function deleteList(req,res,next){
+    const id = req.params.id
+    return model.deleteList(id)
+    .then(result => {
+        res.status(200).send(result)
+    })
+    .catch(err => next(err))
+}
+
+// function updateList(req,res,next){
+//     const id = req.params
+// }
 // function updateList(){
 //     const listId = req.params.id;
 //     //const reframedList = req.body;
@@ -44,8 +77,9 @@ function getList(req,res,next){
 
 module.exports = {
     getAllLists,
-    getList
-    // addList,
-    // deleteList,
+    getAllUserLists,
+    getList,
+    addList,
+    deleteList,
     // updateList
 };
