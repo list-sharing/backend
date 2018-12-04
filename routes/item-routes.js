@@ -2,11 +2,10 @@ const express = require('express')
 const itemsController = require('../controllers/item-controllers')
 const router = express.Router()
 
-router.get('/:userId/list/:listId/items', itemsController.getAllItems)
-router.get('/:userId/list/:listId/items/:itemId', itemsController.getOneItem)
-router.post('/:userId/list/:listId/items', itemsController.createItem)
-router.put('/:userId/list/:listId/items/:itemId', itemsController.modifyItem)
-router.delete('/:userId/list/:listId/items/:itemId', itemsController.removeItem)
-
+router.get('/', itemsController.getAllItems)
+router.get('/:itemId', itemsController.getOneItem)
+router.post('/', itemsController.createItem)
+router.put('/:itemId', itemsController.modifyItem)
+router.delete('/:itemId', itemsController.removeItem)
 
 module.exports = router
