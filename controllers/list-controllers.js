@@ -1,8 +1,20 @@
 const model = require('../models/list-models');
 
 function getAllLists(req,res,next){
+    model.getAllLists()
+    .then(function(result){
+        if(result.length<1)
+        return next({status: 404, message: "list not found"})
 
-  model.getAllLists(req.params.userId)
+        res.status(200).send(result)
+    })
+    .catch(next)
+}
+
+function getAllUserLists(req,res,next){
+    console.log(req.params);
+    
+  model.getAllUserLists(req.params.userId)
   .then(function(result){
       if(result.length < 1)
       return next({status: 404, message: "list not found"})
@@ -65,6 +77,7 @@ function deleteList(req,res,next){
 
 module.exports = {
     getAllLists,
+    getAllUserLists,
     getList,
     addList,
     deleteList,
