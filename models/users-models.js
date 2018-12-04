@@ -26,7 +26,7 @@ function signup(email, password) {
         })
 }
 
-function editOneUser(userId, ) {
+function editOneUser(userId) {
     return knex('users')
         .where({
             id: userId

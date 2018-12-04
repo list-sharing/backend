@@ -1,168 +1,75 @@
-const lists = require('../db/knex')
+const knex = require('../db/knex')
 const uuid = require('uuid')
 
 function createItem(userId, listId, newItem) {
-
-    const user = lists.find(ele => ele.id === userId)
-
-    const list = user.find(ele => ele.id === listId)
-
-    if (!list) {
-        return {
-            error: ['list not found']
-        }
-    }
-
-    if (!user) {
-        return {
-            error: ['user not found']
-        }
-    }
-
-    const error = []
-    const {
-        listId,
-        sourceURL,
-        itemSynopsis
-    } = newItem
-
-    newItem.id=uuid()
-
-    if (!sourceURL && !itemSynopsis && !listId) {
-        error.push('Please Provide list Info To Create')
-    }
-    if (error.length) return {
-        error
-    }
-    list.items.push(newItem)
-    return newItem
+    return knex('items')
+        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+        .where({
+            user_id: userId,
+            id: listId
+        })
+        .insert({
+            newItem
+        })
+        .then(() => {
+            return knex('items')
+        })
 }
 
 function modifyItem(userId, listId, itemId, newItem) {
-    const user = lists.find(ele => ele.id === userId)
-    const list = lists.find(ele => ele.id === listId)
-    const item = list.items
-
-    if (!list) {
-        return {
-            error: ['list not found']
-        }
-    }
-
-    if (!user) {
-        return {
-            error: ['user not found']
-        }
-    }
-
-    const itemIndex = item.findIndex(ele => ele.id === itemId)
-    const listIndex = lists.findIndex(ele => ele.id === listId)
-    if (listIndex === -1) {
-        error.push('Not Found')
-    }
-
-    const {
-        id,
-        listId,
-        sourceURL,
-        itemSynopsis
-    } = newItem
-
-    const error = []
-    if (!sourceURL && !itemSynopsis && !listId) {
-        error.push("Please fill in all values")
-    }
-    if (error.length) return {
-        error
-    }
-
-    lists[listIndex].items = item
-    item[itemIndex].sourceURL = sourceURL
-    item[itemIndex].itemSynopsis = itemSynopsis
-    return item[itemIndex]
+    return knex('items')
+        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+        .where({
+            user_id: userId,
+            list_id: listId,
+            id: itemId
+        })
+        .update({
+            newItem
+        })
+        .then(() => {
+            return knex('items')
+        })
 }
 
 function getAllItems(userId, listId) {
-    const user = lists.find(ele => ele.id === userId)
-    const list = lists.find(ele => ele.id === listId)
 
-    if (!list) {
-        return {
-            error: ['list not found']
-        }
-    }
-    if (!user) {
-        return {
-            error: ['user not found']
-        }
-    }
-
-    const item = list.items
-    const auths = item.map((ele)=> {
-        return ele
-    })
-    return auths
+    return knex('items')
+        .where({
+            user_id:userId,
+            list_id:listId
+        })
 }
+
 
 function getOneItem(userId, listId, itemId) {
-    const user = lists.find(ele => ele.id === userId)
-
-    const list = lists.find(ele => ele.id === listId)
-    const item = list.items
-
-    const itemIndex = item.findIndex(ele => ele.id === itemId)
-
-    if (!user) {
-        return {
-            error: ['user not found']
-        }
-    }
-    if (!list) {
-        return {
-            error: ['list not found']
-        }
-    }
-    if (!item) {
-        return {
-            error: ['item not found']
-        }
-    }
-    return item[itemIndex]
-}
+    return knex('lists')
+        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+        .where({
+            user_id: userId,
+            list_id: listId,
+            id: itemId
+        })
+};
 
 function removeItem(userId, listId, itemId) {
-    const user = lists.find(ele => ele.id === userId)
-    const listIndex = lists.findIndex(ele => ele.id === listId)
-    const item = lists[listIndex].items
-    const itemIndex = item.findIndex(ele => ele.id === itemId)
-    
-    if (!user) {
-        return {
-            error: ['user not found']
-        }
-    }
-    if (!list) {
-        return {
-            error: ['list not found']
-        }
-    }
-    if (!item) {
-        return {
-            error: ['item not found']
-        }
-    }
-    if (listIndex === -1) return {
-        error: ['list not Found']
-    }
-    if (itemIndex === -1) {
-        return {
-            error: ['item not found']
-        }
-    }
-
-    item.splice(itemIndex, 1)
-
-    return item
+    return knex('lists')
+        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+        .where({
+            user_id: userId,
+            list_id: listId,
+            id: itemId
+        })
+        .del()
+        .then(() => {
+            return knex('items')
+        })
 }
 
-module.exports ={createItem, modifyItem, getOneItem, getAllItems, removeItem}
+module.exports = {
+    createItem,
+    modifyItem,
+    getOneItem,
+    getAllItems,
+    removeItem
+}
