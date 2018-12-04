@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.string('list_name').notNullable().defaultsTo('');
       table.text('desc');
+      table.text('img');
       table.timestamps(true, true);
   })
 };
