@@ -24,13 +24,17 @@ function getList(req,res,next){
 function addList(req,res,next){
     console.log(req.body)
     if(!req.body.list_name) throw {status: 500, message: "missing name"}
-
-    model.addList(req.body).then(function(result){
+    let list
+    model.addList(req.body).then(function([result]){
         if(!result)
         return next({status: 500, message: "list not made"})
 
-        console.log(result)
-        res.status(201).send(result)
+        list = result
+        return model.addUserToList(req.params.userId,result.id)
+        
+    })
+    .then(function(result){
+        res.status(201).send(list)
     })
     .catch(next)
 }
