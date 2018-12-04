@@ -5,7 +5,8 @@ exports.up = function(knex, Promise) {
         table.integer('user_id').notNullable();
         table.foreign('user_id').references('users.id');
         table.integer('list_id').notNullable();
-        table.foreign('list_id').references('lists.id')
+        table.foreign('list_id').references('lists.id');
+        table.boolean('is_owner').notNulable().defaultsTo('false');
     })
 };
 
