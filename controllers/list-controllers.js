@@ -1,7 +1,6 @@
 const model = require('../models/list-models');
 
 function getAllLists(req,res,next){
-    console.log('hitting get all lists')
   model.getAllLists(req.params.userId)
   .then(function(result){
       if(result.length < 1)
