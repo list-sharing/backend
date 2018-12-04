@@ -19,11 +19,19 @@ function getList(userId, listId){
     })
 };
 
-function addList(userId, listId){
-    return knex('list')
-    .innerJoin('user_lists','users_lists_id','list.id')
-    .where({
-        
-    })
+function addList(body){
+    return knex('lists')
+    .insert(body)
+    .returning('*')
 }
-module.exports = {getAllLists,getList}
+
+function deleteList(userId, listId){
+    return knex('lists')
+    .del()
+    .where({
+        user_id: userId,
+        list_id: listId
+    })
+    .returning('*')
+}
+module.exports = {getAllLists,getList, addList, deleteList}

@@ -4,8 +4,8 @@ const listsCtrl = require('../controllers/list-controllers')
 
 router.get('/',listsCtrl.getAllLists)
 router.get('/:listId',listsCtrl.getList)
-router.post('/:listId',listsCtrl.addList)
-// router.delete('/',listsCtrl.deleteList)
-// router.put('/:listId',listsCtrl.updateList)
+router.delete('/:listId',listsCtrl.deleteList)
+router.post('/',listsCtrl.addList)
+// router.patch('/:listId',listsCtrl.updateList)
 
 module.exports = router

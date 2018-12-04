@@ -1,6 +1,7 @@
 const model = require('../models/list-models');
 
 function getAllLists(req,res,next){
+
   model.getAllLists(req.params.userId)
   .then(function(result){
       if(result.length < 1)
@@ -13,7 +14,7 @@ function getAllLists(req,res,next){
 function getList(req,res,next){
     model.getList(req.params.userId, req.params.listId).then(function(result){
         if(!result||result.length==0)
-        next({status: 404, message: "list not found"})
+        return next({status: 404, message: "list not found"})
 
         res.status(200).send(result);
     })
@@ -21,25 +22,32 @@ function getList(req,res,next){
 };
 
 function addList(req,res,next){
-    model.addList(req.params.userId,req.params.listId).then(function(result){
-        if(!result||result.length==0)
-        next({status: 400, message: "list not found"})
+    console.log(req.body)
+    if(!req.body.list_name) throw {status: 500, message: "missing name"}
 
-        
-        res.status(200).send(result);
-    }).catch(next)
+    model.addList(req.body).then(function(result){
+        if(!result)
+        return next({status: 500, message: "list not made"})
+
+        console.log(result)
+        res.status(201).send(result)
+    })
+    .catch(next)
 }
 
-// function deleteList(req,res,next){
-//     const listId = req.params.id;
-//     model.deleteList(listId).then(function(result){
-//         if(!result||result.length==0)
-//         next({status: 404, message: "list already deleted"})
 
-//         res.status(200).send(result)
-//     })
-// };
+function deleteList(req,res,next){
+    const id = req.params.id
+    return model.deleteList(id)
+    .then(result => {
+        res.status(200).send(result)
+    })
+    .catch(err => next(err))
+}
 
+// function updateList(req,res,next){
+//     const id = req.params
+// }
 // function updateList(){
 //     const listId = req.params.id;
 //     //const reframedList = req.body;
@@ -53,8 +61,8 @@ function addList(req,res,next){
 
 module.exports = {
     getAllLists,
-    getList
-    // addList,
-    // deleteList,
+    getList,
+    addList,
+    deleteList,
     // updateList
 };
