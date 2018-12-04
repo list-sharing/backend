@@ -18,7 +18,7 @@ function createItem(userId, listId, newItem) {
 
 function modifyItem(userId, listId, itemId, newItem) {
     return knex('items')
-        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
         .where({
             user_id: userId,
             list_id: listId,
@@ -35,16 +35,19 @@ function modifyItem(userId, listId, itemId, newItem) {
 function getAllItems(userId, listId) {
 
     return knex('items')
+        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
         .where({
-            user_id:userId,
-            list_id:listId
+            user_id: userId,
+            list_id: listId
+        })
+        .then(result => {
+            console.log(result)
         })
 }
 
-
 function getOneItem(userId, listId, itemId) {
-    return knex('lists')
-        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+    return knex('items')
+        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
         .where({
             user_id: userId,
             list_id: listId,
@@ -53,8 +56,8 @@ function getOneItem(userId, listId, itemId) {
 };
 
 function removeItem(userId, listId, itemId) {
-    return knex('lists')
-        .innerJoin('users_lists', 'users_lists.list_id', 'item.list_id')
+    return knex('items')
+        .innerJoin('users_lists', 'users_lists.list_id', '=', 'item.list_id')
         .where({
             user_id: userId,
             list_id: listId,

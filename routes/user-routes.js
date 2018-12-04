@@ -9,7 +9,8 @@ router.get('/:id', usersCtrl.getOneUser)
 router.post('/', usersCtrl.signup)
 router.put('/:id',usersCtrl.editOneUser)
 
-router.use('/:userId/lists', require('./lists-routes'))
+router.use('/:userId/lists', require('./list-routes'))
+router.use('/:userId/lists/:listId/items', require('./item-routes'))
 
 
 module.exports = router

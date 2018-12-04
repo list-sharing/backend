@@ -11,7 +11,7 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
-app.use('/users', require('./routes/users-routes'))
+app.use('/users', require('./routes/user-routes'))
 app.use('/auth', require('./routes/auth-routes'))
 
 app.use((req, res, next) => {
@@ -20,8 +20,8 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
     console.error(err)
-    const status = 500 || err.status
-    res.status(status).send(err.message)
+    const status =  err.status || 500
+    res.status(status).send(err)
 })
 
 const listener = () => console.log(`Getting lit on port ${port}`)
