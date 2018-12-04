@@ -17,7 +17,8 @@ function getOneUser (req,res,next) {
         if(!result) {
             return next({status: 404, message: user })
         }
-    res.status(200).send(result)})
+    res.status(200).send(result)
+    })
 }
 
 function editOneUser (req,res,next) {

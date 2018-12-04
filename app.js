@@ -20,8 +20,8 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
     console.error(err)
-    const status = 500 || err.status
-    res.status(status).send(err.message)
+    const status =  err.status || 500
+    res.status(status).send(err)
 })
 
 const listener = () => console.log(`Getting lit on port ${port}`)
