@@ -66,7 +66,7 @@ function updateList(req,res,next){
     if(!listId)
     return next({status: 404, message:"list not found"})
 
-    model.updateList(userId,listId,body).then(function(result){
+    model.updateList(listId,body).then(function(result){
         res.status(201).send(result)
     }).catch(next)
 }
@@ -83,6 +83,15 @@ function updateList(req,res,next){
 //         res.status(201).send(result)
 //     })
 // };
+
+function updateList(req, res, next){
+    const id = req.params.listId
+    const body = req.body
+    console.log (req.body)
+    return model.updateList(id, body)
+    .then(result => console.log(result))
+
+}
 
 module.exports = {
     getAllLists,

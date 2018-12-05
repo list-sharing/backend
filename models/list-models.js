@@ -50,7 +50,7 @@ function deleteList(userId, listId){
 }
 //add validation for user updating the list
 //add owners key validation within this function
-function updateList(userId,listId,body){
+function updateList(listId, body){
     return knex('lists')
     .where({
         id: listId

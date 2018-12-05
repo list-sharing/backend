@@ -1,10 +1,12 @@
 const itemsModel = require('../models/item-models.js')
 
 function createItem(req, res, next) {
-  const {
-    sourceURL,
-    itemSynopsis
-  } = req.body
+  console.log(req.body)
+  // const {
+  //   id,
+  //   sourceURL,
+  //   itemSynopsis
+  // } = req.body unnecessary deconstructing.
 
   return itemsModel.createItem(req.params.listId, req.body)
     .then((result) => {
@@ -14,10 +16,7 @@ function createItem(req, res, next) {
           message: "error"
         })
       }
-      res.status(201).send({
-        sourceURL,
-        itemSynopsis
-      })
+      res.status(201).send(result)
     })
     .catch(next)
 }
