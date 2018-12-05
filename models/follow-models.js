@@ -1,45 +1,46 @@
 const knex = require('../db/knex')
 
 function createFollower(newFollower) {
-    return knex('friends')
+    return knex('followers')
         .where({
-            'users.id':'friends.user_id'
+            'users.id': 'followers.user_id'
         })
         .insert({
-            newFriend
-        })
-        .then(result=> {
-            return result
-        })
-}
-
-function getAllFollowers() {
-    return knex('friends')
-        .where({
-            'users.id':'friends.user_id'
+            newFollower
         })
         .then(result => {
             return result
         })
 }
 
-function getOneFollower(friendId) {
-    return knex('friends')
+function getAllFollowers() {
+    return knex('followers')
         .where({
-            'users.id':'friends.user_id',
-            'id': friendId
+            'users.id': 'followers.user_id'
+        })
+        .then(result => {
+            return result
+        })
+}
+
+function getOneFollower(followerId) {
+    return knex('followers')
+        .where({
+            'users.id': 'followers.user_id',
+            'followers.follower_id': followerId
         })
         .then(result => {
             return result
         })
 };
 
-function removeFollower(friendId) {
-    return knex('friends')
-    .where({
-        'id': friendId
-    })
-    .del()
+function removeFollower(followerId) {
+    return knex('followers')
+        .where({
+            'users.id': 'followers.user_id',
+            'followers.follower_id': followerId
+        })
+        .del()
         .then(result => {
             return result
         })
