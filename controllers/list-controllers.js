@@ -24,8 +24,7 @@ function getAllUserLists(req,res,next){
 
 function getList(req,res,next){
     model.getList(req.params.userId, req.params.listId).then(function(result){
-        if(!result||result.length==0)
-        return next({status: 404, message: "list not found"})
+        if(!result||result.length==0) return next({status: 404, message: "list not found!"})
 
         res.status(200).send(result);
     })
