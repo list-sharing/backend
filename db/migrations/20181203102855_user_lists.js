@@ -5,12 +5,7 @@ exports.up = function(knex, Promise) {
         table.integer('user_id').notNullable();
         table.foreign('user_id').references('users.id').onDelete('CASCADE');
         table.integer('list_id').notNullable();
-<<<<<<< HEAD
-        table.foreign('list_id').references('lists.id');
-        table.boolean('is_owner').notNulable().defaultsTo('false');
-=======
         table.foreign('list_id').references('lists.id').onDelete('CASCADE');
->>>>>>> JoeyRouteBranch
     })
 };
 
