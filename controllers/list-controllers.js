@@ -59,7 +59,6 @@ function deleteList(req,res,next){
 }
 
 function updateList(req,res,next){
-    console.log(req.body)
     const body = req.body
     const userId = req.params.userId
     const listId = req.params.listId
