@@ -18,7 +18,7 @@ function getList(userId, listId){
     return knex('lists')
     .innerJoin('users_lists', 'users_lists.list_id', '=', 'lists.id')
     .where({
-        user_id: userId,
+        // user_id: userId,
         list_id: listId
     })
 }

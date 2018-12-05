@@ -41,8 +41,10 @@ function modifyItem(req, res, next) {
 }
 
 function getAllItems(req, res, next) {
+  console.log('hitting item-controllers getAllItems')
   return itemsModel.getAllItems(req.params.listId)
     .then((result) => {
+      console.log(result)
       if (!result) {
         return next({
           status: 404,
@@ -53,7 +55,6 @@ function getAllItems(req, res, next) {
     })
     .catch(next)
 }
-
 
 function getOneItem(req, res, next) {
   return itemsModel.getOneItem(req.params.listId, req.params.itemId)
@@ -82,7 +83,6 @@ function removeItem(req, res, next) {
     })
     .catch(next)
 }
-
 
 module.exports = {
   createItem,
