@@ -75,11 +75,20 @@ function deleteList(req,res,next){
 //     })
 // };
 
+function updateList(req, res, next){
+    const id = req.params.listId
+    const body = req.body
+    console.log (req.body)
+    return model.updateList(id, body)
+    .then(result => console.log(result))
+
+}
+
 module.exports = {
     getAllLists,
     getAllUserLists,
     getList,
     addList,
     deleteList,
-    // updateList
+    updateList
 };

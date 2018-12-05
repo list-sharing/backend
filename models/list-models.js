@@ -47,4 +47,16 @@ function deleteList(userId, listId){
     })
     .returning('*')
 }
-module.exports = {getAllLists,getAllUserLists,getList, addList,addUserToList, deleteList}
+
+function updateList(listId, body){
+    return knex('lists')
+    .where({
+        id: listId
+    })
+    .update({
+        desc: body.desc,
+        list_name: body.name
+    })
+    .returning('*')
+}
+module.exports = {getAllLists,getAllUserLists,getList, addList,addUserToList, deleteList, updateList}
