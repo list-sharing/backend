@@ -2,7 +2,6 @@ const itemsModel = require('../models/item-models.js')
 
 function createItem(req, res, next) {
   const {
-    id,
     sourceURL,
     itemSynopsis
   } = req.body
@@ -16,7 +15,6 @@ function createItem(req, res, next) {
         })
       }
       res.status(201).send({
-        id,
         sourceURL,
         itemSynopsis
       })

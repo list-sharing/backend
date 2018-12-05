@@ -11,6 +11,6 @@ router.put('/:id',usersCtrl.editOneUser)
 
 router.use('/:userId/lists', require('./list-routes'))
 router.use('/:userId/lists/:listId/items', require('./item-routes'))
-
+router.use('/:userId/friends', require('./friend-routes'))
 
 module.exports = router
