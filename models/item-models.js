@@ -3,7 +3,6 @@ const knex = require('../db/knex')
 function createItem(listId, newItem) {
     console.log('hitting createItem in item-models', newItem)
     return knex('items')
-        .select('*')
         .innerJoin('lists', 'items.list_id', 'lists.id')
         .where({
             'lists.id': listId
