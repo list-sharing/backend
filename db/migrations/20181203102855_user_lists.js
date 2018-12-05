@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
         table.foreign('user_id').references('users.id').onDelete('CASCADE');
         table.integer('list_id').notNullable();
         table.foreign('list_id').references('lists.id').onDelete('CASCADE');
+        table.boolean('is_owner').notNullable().defaultsTo('false');
     })
 };
 
