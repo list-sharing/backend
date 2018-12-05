@@ -1,13 +1,6 @@
 const itemsModel = require('../models/item-models.js')
 
 function createItem(req, res, next) {
-  console.log(req.body)
-  // const {
-  //   id,
-  //   sourceURL,
-  //   itemSynopsis
-  // } = req.body unnecessary deconstructing.
-
   return itemsModel.createItem(req.params.listId, req.body)
     .then((result) => {
       if (!result) {
@@ -22,10 +15,7 @@ function createItem(req, res, next) {
 }
 
 function modifyItem(req, res, next) {
-  const {
-    itemSynopsis
-  } = req.body;
-  return itemsModel.modifyItem(req.params.listId, req.params.itemId, req.body)
+  return itemsModel.modifyItem(req.params.itemId, req.body)
     .then((result) => {
       if (!result) {
         return next({
@@ -33,9 +23,7 @@ function modifyItem(req, res, next) {
           message: "error"
         })
       }
-      res.status(201).send({
-        itemSynopsis
-      })
+      res.status(201).send(result)
     })
     .catch(next)
 }
@@ -70,12 +58,12 @@ function getOneItem(req, res, next) {
 }
 
 function removeItem(req, res, next) {
-  return itemsModel.removeItem(req.params.listId, req.params.itemId)
+  return itemsModel.removeItem(req.params.itemId)
     .then((result) => {
       if (!result) {
         return next({
           status: 404,
-          message: "error"
+          message: "there was an error"
         })
       }
       res.status(200).send(result)

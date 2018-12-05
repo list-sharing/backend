@@ -1,10 +1,6 @@
 const followersModel = require('../models/follow-models.js')
 
 function createFollower(req, res, next) {
-  const {
-    user_id,
-    friend_id
-  } = req.body
 
   return followersModel.createFollower(req.body)
     .then((result) => {
@@ -14,16 +10,13 @@ function createFollower(req, res, next) {
           message: "error"
         })
       }
-      res.status(201).send({
-      user_id,
-      friend_id
-      })
+      res.status(201).send(result)
     })
     .catch(next)
 }
 
 function getAllFollowers(req, res, next) {
-  return followersModel.getAllFollowers()
+  return followersModel.getAllFollowers(req.params.userId)
     .then((result) => {
       if (!result) {
         return next({
@@ -38,7 +31,7 @@ function getAllFollowers(req, res, next) {
 
 
 function getOneFollower(req, res, next) {
-  return followersModel.getOneFollower(req.params.friendId)
+  return followersModel.getOneFollower(req.params.followerId)
     .then((result) => {
       if (!result) {
         return next({
@@ -52,7 +45,7 @@ function getOneFollower(req, res, next) {
 }
 
 function removeFollower(req, res, next) {
-  return followersModel.removeFollower(req.params.friendId)
+  return followersModel.removeFollower(req.params.followerId)
     .then((result) => {
       if (!result) {
         return next({

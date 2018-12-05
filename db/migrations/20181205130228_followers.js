@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
         table.increments();
         table.integer("user_id").notNullable()
         table.foreign('user_id').references('users.id').onDelete('CASCADE')
-        table.integer("friend_id").notNullable()
-        table.foreign("friend-id").references('users.id').onDelete('CASCADE')
+        table.integer("follower_id").notNullable()
+        table.foreign("follower_id").references('users.id').onDelete('CASCADE')
     })
 };
 

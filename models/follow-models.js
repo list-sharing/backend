@@ -5,18 +5,19 @@ function createFollower(newFollower) {
         .where({
             'users.id': 'followers.user_id'
         })
-        .insert({
+        .insert(
             newFollower
-        })
+        )
         .then(result => {
             return result
         })
 }
 
-function getAllFollowers() {
+function getAllFollowers(userId) {
     return knex('followers')
+    .innerJoin('users', 'users.id', 'followers.user_id')
         .where({
-            'users.id': 'followers.user_id'
+            'followers.user_id':userId
         })
         .then(result => {
             return result
