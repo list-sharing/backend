@@ -1,12 +1,12 @@
-const friendsModel = require('../models/friend-models.js')
+const followersModel = require('../models/follow-models.js')
 
-function createFriend(req, res, next) {
+function createFollower(req, res, next) {
   const {
     user_id,
     friend_id
   } = req.body
 
-  return friendsModel.createFriend(req.body)
+  return followersModel.createFollower(req.body)
     .then((result) => {
       if (!result) {
         return next({
@@ -21,8 +21,8 @@ function createFriend(req, res, next) {
     .catch(next)
 }
 
-function getAllFriends(req, res, next) {
-  return friendsModel.getAllFriends()
+function getAllFollowers(req, res, next) {
+  return followersModel.getAllFollowers()
     .then((result) => {
       if (!result) {
         return next({
@@ -36,8 +36,8 @@ function getAllFriends(req, res, next) {
 }
 
 
-function getOneFriend(req, res, next) {
-  return friendsModel.getOneFriend(req.params.friendId)
+function getOneFollower(req, res, next) {
+  return followersModel.getOneFollower(req.params.friendId)
     .then((result) => {
       if (!result) {
         return next({
@@ -50,8 +50,8 @@ function getOneFriend(req, res, next) {
     .catch(next)
 }
 
-function removeFriend(req, res, next) {
-  return friendsModel.removeFriend(req.params.friendId)
+function removeFollower(req, res, next) {
+  return followersModel.removeFollower(req.params.friendId)
     .then((result) => {
       if (!result) {
         return next({
@@ -66,8 +66,8 @@ function removeFriend(req, res, next) {
 
 
 module.exports = {
-  createFriend,
-  getAllFriends,
-  getOneFriend,
-  removeFriend
+  createFollower,
+  getAllFollowers,
+  getOneFollower,
+  removeFollower
 }

@@ -1,6 +1,6 @@
 const knex = require('../db/knex')
 
-function createFriend(newFriend) {
+function createFollower(newFollower) {
     return knex('friends')
         .where({
             'users.id':'friends.user_id'
@@ -13,7 +13,7 @@ function createFriend(newFriend) {
         })
 }
 
-function getAllFriends() {
+function getAllFollowers() {
     return knex('friends')
         .where({
             'users.id':'friends.user_id'
@@ -23,7 +23,7 @@ function getAllFriends() {
         })
 }
 
-function getOneFriend(friendId) {
+function getOneFollower(friendId) {
     return knex('friends')
         .where({
             'users.id':'friends.user_id',
@@ -34,7 +34,7 @@ function getOneFriend(friendId) {
         })
 };
 
-function removeFriend(friendId) {
+function removeFollower(friendId) {
     return knex('friends')
     .where({
         'id': friendId
@@ -46,8 +46,8 @@ function removeFriend(friendId) {
 }
 
 module.exports = {
-    createFriend,
-    getOneFriend,
-    getAllFriends,
-    removeFriend
+    createFollower,
+    getOneFollower,
+    getAllFollowers,
+    removeFollower
 }
