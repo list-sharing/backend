@@ -39,12 +39,30 @@ function addUserToList(userId,listId){
 }
 
 function deleteList(userId, listId){
+    console.log(userId, listId)
     return knex('lists')
-    .del()
     .where({
-        user_id: userId,
-        list_id: listId
+        // "user.id": userId,
+        "id": listId
+    })
+    .del()
+    .returning('*')
+}
+//add validation for user updating the list
+//add owners key validation within this function
+function updateList(userId,listId,body){
+    console.log(body.list_name)
+    console.log(body.desc);
+    
+    return knex('lists')
+    .where({
+        id: listId
+    })
+    .update({
+        "list_name": body.list_name,
+        "desc": body.desc
     })
     .returning('*')
 }
-module.exports = {getAllLists,getAllUserLists,getList, addList,addUserToList, deleteList}
+
+module.exports = {getAllLists,getAllUserLists,getList, addList,addUserToList, deleteList, updateList}
