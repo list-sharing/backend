@@ -15,7 +15,8 @@ function createFollower(req, res, next) {
         })
       }
       res.status(201).send({
-        name
+      user_id,
+      friend_id
       })
     })
     .catch(next)
