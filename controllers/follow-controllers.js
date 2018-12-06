@@ -2,7 +2,7 @@ const followersModel = require('../models/follow-models.js')
 
 function createFollower(req, res, next) {
 
-  return followersModel.createFollower(req.body)
+  return followersModel.createFollower(req.params.userId, req.body)
     .then((result) => {
       if (!result) {
         return next({
@@ -31,7 +31,7 @@ function getAllFollowers(req, res, next) {
 
 
 function getOneFollower(req, res, next) {
-  return followersModel.getOneFollower(req.params.followerId)
+  return followersModel.getOneFollower(req.params.userId, req.params.followerId)
     .then((result) => {
       if (!result) {
         return next({
@@ -45,7 +45,7 @@ function getOneFollower(req, res, next) {
 }
 
 function removeFollower(req, res, next) {
-  return followersModel.removeFollower(req.params.followerId)
+  return followersModel.removeFollower(req.params.userId, req.params.followerId)
     .then((result) => {
       if (!result) {
         return next({
