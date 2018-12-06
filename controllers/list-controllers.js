@@ -58,6 +58,7 @@ function deleteList(req,res,next){
 }
 
 function updateList(req,res,next){
+    console.log('hitting updatelist')
     const body = req.body
     const userId = req.params.userId
     const listId = req.params.listId
@@ -65,9 +66,11 @@ function updateList(req,res,next){
     if(!listId)
     return next({status: 404, message:"list not found"})
 
-    model.updateList(listId,body).then(function(result){
+    model.updateList(listId,body)
+    .then(result => {
         res.status(201).send(result)
-    }).catch(next)
+    })
+    .catch(next)
 }
 // function updateList(req,res,next){
 //     const id = req.params
@@ -88,7 +91,11 @@ function updateList(req, res, next){
     const body = req.body
     console.log (req.body)
     return model.updateList(id, body)
-    .then(result => console.log(result))
+    .then(result => {
+        console.log(result)
+        res.status(201).send(result)
+    })
+    .catch(next)
 
 }
 
