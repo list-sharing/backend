@@ -19,9 +19,9 @@ function login (req, res, next){
 
 function authenticate(req, res, next){
     const [, token] = req.headers.authorization.split(' ')
-    if(!token) return next({status:401, message: 'Unauthorized'})
+    if(!token) return next({status:401, message: 'Unauthorized, no token'})
     jwt.verify(token, process.env.SECRET, (err, payload) => {
-        if(err) return next({status: 401, message: 'Unauthorized'})
+        if(err) return next({status: 401, message: 'Unauthorized, token not confirmed'})
         req.claim = payload
         next()
     })
@@ -32,8 +32,8 @@ function authStatus(req, res, next){
 }
 
 function checkRequest(req, res, next) {
-    const id = req.params.id
-    if (id !== req.claims.sub.id) return next({ status: 401, message: 'Unauthorized' })
+    const id = req.params.id || req.params.userId
+    if (id != req.claim.sub.id) return next({ status: 401, message: 'Unauthorized, ids dont match' })
     next()
 }   
 
