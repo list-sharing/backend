@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router({mergeParams:true})
 const listsCtrl = require('../controllers/list-controllers')
+const authCtrl = require('../controllers/auth-controllers')
 
 // router.get('/',listsCtrl.getAllLists)
 
@@ -9,7 +10,7 @@ router.get('/:listId',listsCtrl.getList)
 router.delete('/:listId',listsCtrl.deleteList)
 router.post('/' ,listsCtrl.addList)
 
-router.put('/:listId',listsCtrl.updateList)
+router.put('/:listId', authCtrl.authenticate, authCtrl.checkRequest, listsCtrl.updateList)
 
 // router.post('user/userId/list/listId',listsCtrl.addUserToList)
 
