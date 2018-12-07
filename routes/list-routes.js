@@ -12,6 +12,6 @@ router.post('/' ,listsCtrl.addList)
 
 router.put('/:listId', authCtrl.authenticate, authCtrl.checkRequest, listsCtrl.updateList)
 
-// router.post('user/userId/list/listId',listsCtrl.addUserToList)
+router.post('/:listId/copy',listsCtrl.addListToUser)
 
 module.exports = router

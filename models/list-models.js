@@ -14,11 +14,10 @@ function getAllUserLists(userId){
         })
 }
 
-function getList(userId, listId){
+function getList(listId){
     return knex('lists')
     .innerJoin('users_lists', 'users_lists.list_id', '=', 'lists.id')
     .where({
-        // user_id: userId,
         list_id: listId
     })
 }
@@ -29,8 +28,8 @@ function addList(body){
     .returning('*')
 }
 
-function addUserToList(userId,listId){
-    return knex('users_lists')
+function addListToUser(userId,listId){
+    return knex('lists')
     .insert({
         user_id: userId,
         list_id: listId
@@ -63,4 +62,4 @@ function updateList(listId, body){
     .returning('*')
 }
 
-module.exports = {getAllLists,getAllUserLists,getList, addList,addUserToList, deleteList, updateList}
+module.exports = {getAllLists,getAllUserLists,getList, addList,addListToUser, deleteList, updateList}

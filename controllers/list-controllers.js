@@ -23,7 +23,7 @@ function getAllUserLists(req,res,next){
 };
 
 function getList(req,res,next){
-    model.getList(req.params.userId, req.params.listId).then(function(result){
+    model.getList(req.params.listId).then(function(result){
         if(!result||result.length==0) return next({status: 404, message: "list not found!"})
 
         res.status(200).send(result);
@@ -89,21 +89,30 @@ function updateList(req,res,next){
 function updateList(req, res, next){
     const id = req.params.listId
     const body = req.body
-    console.log (req.body)
     return model.updateList(id, body)
     .then(result => {
-        console.log(result)
         res.status(201).send(result)
     })
     .catch(next)
 
 }
 
+function addListToUser(req, res, next){
+    const userId = req.params.userId
+    const listId = req.params.listId
+
+    return model.addListToUser(userId, listId)
+    .then(result => {
+        res.status(201).send(result)
+    })
+    .catch(next)
+}
 module.exports = {
     getAllLists,
     getAllUserLists,
     getList,
     addList,
     deleteList,
-    updateList
+    updateList,
+    addListToUser
 };
