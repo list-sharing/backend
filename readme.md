@@ -7,5 +7,5 @@ From the command line interface:
 4. type 'npm run knex seed:run'
 5. type 'npm run dev'
 
-Link to backend: https://github.com/list-sharing/frontend
+Link to frontend: https://github.com/list-sharing/frontend
 
